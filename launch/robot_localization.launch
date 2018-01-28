@@ -1,0 +1,11 @@
+<launch>
+  <include file="$(find ugv_sandbox)/launch/ugv_startup.launch" />
+
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true" output="screen">
+    <rosparam command="load" file="$(find ugv_sandbox)/config/ugv_localization.yaml" />
+    <!--  Placeholder for output topic remapping
+    <remap from="odometry/filtered" to=""/>
+    <remap from="accel/filtered" to=""/>
+    -->
+  </node>
+</launch>

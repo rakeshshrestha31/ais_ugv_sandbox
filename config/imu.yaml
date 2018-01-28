@@ -1,0 +1,6 @@
+orientation_variance: 1.0
+angular_velocity_variance: 999.0
+linear_acceleration_variance: 999999.0
+accelerometer_x_bias: 0.07
+accelerometer_y_bias: 0.3
+accelerometer_z_bias: 0.0 

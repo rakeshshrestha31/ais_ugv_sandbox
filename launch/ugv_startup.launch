@@ -1,0 +1,36 @@
+<launch>
+	<!-- !!!!!!!!! microcontroller drivers !!!!!!!!! -->
+	<node name="rosserial1" type="serial_node.py" pkg="rosserial_python" output="screen">
+		<param name="port" value="/dev/ttyACM1" />
+		<param name="baud" value="57600" />
+	</node>
+	
+	<node name="rosserial2" type="serial_node.py" pkg="rosserial_python" output="screen">
+		<param name="port" value="/dev/ttyACM2" />
+		<param name="baud" value="57600" />
+	</node>
+	
+	<node name="rosserial3" type="serial_node.py" pkg="rosserial_python" output="screen">
+		<param name="port" value="/dev/ttyACM3" />
+		<param name="baud" value="57600" />
+	</node>
+
+	<!-- urdf + state publisher -->
+    <include file="$(find ugv_v2_test)/launch/ugv_test_bot.launch"/> 
+
+    <!-- The IMU is roughly 30 cm above the small right wheel (do proper calibration of position/orientation!!!!) -->
+    <node pkg="tf" type="static_transform_publisher" name="fake_localize" args="-0.3 0 0 0.5 -0.5 -0.5 0.5 wheel_small_right imu_link 10"/>
+
+    <!-- imu node -->
+    <node pkg="ais_ugv2_xsens" type="ais_ugv2_xsens" respawn="false" name="imu_node" output="screen" />
+
+    <!-- Republish wheelodom with custom covariances -->
+    <node pkg="ugv_sandbox" type="ugv_sandbox_odom_republisher" name="odom_republisher">
+    	<rosparam command="load" file="$(find ugv_sandbox)/config/wheelodom.yaml" />
+    </node>
+
+    <!-- Republish imu with custom covariances -->
+    <node pkg="ugv_sandbox" type="ugv_sandbox_imu_republisher" name="imu_republisher">
+    	<rosparam command="load" file="$(find ugv_sandbox)/config/imu.yaml" />
+    </node>
+</launch>

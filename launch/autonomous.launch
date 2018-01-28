@@ -1,0 +1,102 @@
+<!-- ugv_test.launch
+     created by  Alireza Hekmati
+     created at  AIS
+     this is the launch file for UGV test project -->
+<launch>
+
+  <!-- Robot startup -->
+  <include file="$(find ugv_sandbox)/launch/ugv_startup.launch" />
+  
+  <node pkg="ugv_sandbox" type="ugv_sandbox_odom_republisher" name="odom_republisher" />
+
+	<!--include file="$(find ugv_v2_test)/launch/setup.launch"/-->  
+<!-- urdf + state publisher -->
+    <include file="$(find ugv_v2_test)/launch/ugv_test_bot.launch"/> 
+
+<!-- laser filter -->    
+    <include file="$(find ugv_v2_test)/launch/ugv_test_tim571_laser_filter.launch"/>
+
+<!-- SLAM -->
+    <include file="$(find ugv_v2_test)/launch/ugv_test_slam.launch"/>
+
+<!-- move_base - ugv_test Planner goes in here -->
+   <node pkg="move_base" type="move_base" respawn="true" name="move_base" >
+        <param name="controller_frequency" value="5.0"/>
+        <param name="planner_frequency" value="2.0" />
+        <param name="base_local_planner" value="dwa_mobs_planner/DWAMobsPlannerROS" /> 
+        <rosparam file="$(find ugv_v2_test)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find ugv_v2_test)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find ugv_v2_test)/config/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find ugv_v2_test)/config/navfn_params.yaml" command="load" />   
+        <rosparam file="$(find ugv_v2_test)/config/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find ugv_v2_test)/config/ugv_test_original_planner_params.yaml" command="load" />
+
+    </node>
+
+    <node pkg="pot_detection" type="pot_detection" respawn="false" name="pot_detection" >
+        <remap from="scan" to="base_scan" /> 
+    </node>
+
+    <!-- <node pkg="ugv_odom_subs" type="odom_listener" name="odom_listener" /> -->
+
+    <node pkg="ugv_odom_pub" type="odom_publisher" name="odom_publisher" />
+
+    <node pkg="tf" type="static_transform_publisher" name="fake_localize" args="0 0 0 0 0 0 base_link imu_link 10"/> 
+
+    <node pkg="ag_communicator_v3" type="ag_communicator_v3" respawn="false" name="ag_communicator_v3" />
+
+    <!-- Manual Mode -->
+    <node pkg="ais_ugv2_manual" type="manualMode" respawn="false" name="manualMode" />
+
+    <node pkg="ais_ugv2_temp" type="au_temp" respawn="false" name="au_temp" />
+
+    <!-- imu node -->
+    <node pkg="ais_ugv2_xsens" type="ais_ugv2_xsens" respawn="false" name="imu_node" />
+
+    <!-- Odometry node -->
+    <!-- <node pkg="ais_ugv2_odom" type="ais_ugv2_odom" respawn="false" name="odom_node" /> -->
+
+    <!-- Autonomous navigation --> 
+    <node pkg="ais_pickup_dropoff" type="main_controller" name="main_controller" output="screen" />
+
+    <!-- ugv_test LIDAR -->
+    <include file="$(find ugv_v2_test)/launch/ugv_test_lidar.launch"/> 
+
+    <node name="wifi_listener" pkg="wifi_listener" type="wifi_listener" /> 
+    <node name="uwb_publisher" pkg="uwb_publisher" type="uwb_publisher">
+        <param name="mport" value="/dev/ttyACM0" /> 
+    </node>
+    <node name="uwb_pos" pkg="uwb_pos" type="uwb_pos"/>
+
+    <!-- <node name="laser_wall" pkg="ais_ugv2_laser" type="au_logger" output="screen"/> -->
+
+    <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+      	<param name="output_frame" value="odom"/>
+      	<param name="base_footprint_frame" value="base_link"/>
+  	<param name="freq" value="20.0"/>
+  	<param name="sensor_timeout" value="1.0"/>  
+  	<param name="odom_used" value="true"/>
+  	<param name="imu_used" value="true"/>
+  	<param name="vo_used" value="false"/>
+
+        <!-- <remap from="/robot_pose_ekf/odom_combined" to="/odom" /> -->
+        <remap from="/odom" to="/wheelodom_republished" />
+    </node> 
+
+<!-- microcontroller nodes 
+        <node pkg="rosserial_python" type="serial_node.py" name="gripper" output="screen"> 
+	  <param name="port" value="/dev/ttyACM1" /> 
+	  <param name="baud" value="115200" /> 
+	</node> 
+
+	<node pkg="rosserial_python" type="serial_node.py" name="manipulator" output="screen"> 
+	  <param name="port" value="unkown" /> 
+	  <param name="baud" value="115200" /> 
+	</node> 
+
+	<node pkg="rosserial_python" type="serial_node.py" name="base" output="screen"> 
+	  <param name="port" value="/dev/ttyACM3" /> 
+	  <param name="baud" value="115200" /> 
+	</node> -->
+
+</launch>

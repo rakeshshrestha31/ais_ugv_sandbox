@@ -1,0 +1,4 @@
+pose_position_variance: 9.0
+pose_orientation_variance: 99999.0
+twist_position_variance: 4.0
+twist_orientation_variance: 99999.0
