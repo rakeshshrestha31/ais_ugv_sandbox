@@ -1,0 +1,468 @@
+<robot name="ais">
+    <link name="base_footprint"/>
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="0.013 0 0.17165" rpy="0 0 0" />
+            <geometry>
+                <box size="0.5167 0.39 0.2045"/>
+            </geometry>
+            <material name = "yellow">
+                <color rgba="1 1 0 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="joint10" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin rpy="0 0 0" xyz= "0 0 0"/>
+    </joint>
+
+    <joint name="chassi_spacer_joint" type="fixed">
+	    <origin xyz="-0.24535 0 0.2344" rpy="0 0 0" />        
+	    <parent link="base_link"/>
+	    <child link="chassi_spacer_link" />
+    </joint>
+
+    <link name="chassi_spacer_link">
+	    <visual>
+		<origin xyz="-0.013 0 0" rpy="0 0 0"/>
+		<geometry>
+		    <box size="0.026 0.39 0.079"/>
+		</geometry>
+		<material name="Green"/>
+	     </visual>
+    </link>
+
+    <joint name="chassi_battery_joint" type="fixed">
+	    <origin xyz="-0.026 0 0.063" rpy="0 0 0" />        
+	    <parent link="chassi_spacer_link"/>
+	    <child link="chassi_battery_box_link" />
+    </joint>
+
+    <link name="chassi_battery_box_link">
+	    <visual>
+		<origin xyz="-0.1155 0 0" rpy="0 0 0"/>
+		<geometry>
+		    <box size="0.231 0.425 0.205"/>
+		</geometry>
+		<material name="Green"/>
+	     </visual>
+    </link>
+
+    <joint name="chassi_antenna_joint" type="fixed">
+	    <origin xyz="-0.196 0.1775 0.1025" rpy="0 0 0" />        
+	    <parent link="chassi_battery_box_link"/>
+	    <child link="chassi_antenna_link" />
+    </joint>
+
+    <link name="chassi_antenna_link">
+	    <visual>
+		<origin xyz="0 0 0.165" rpy="0 0 0"/>
+		<geometry>
+		    <cylinder length="0.33" radius="0.03"/>
+		</geometry>
+		<material name="Grey"/>
+	     </visual>
+    </link>
+
+    <!-- Turret & Table -->
+    <joint name="turret_joint" type="revolute">
+	    <axis xyz="0 0 1"/>
+	    <limit effort="55.3" lower="-2.0" upper="2.0" velocity="2.0"/>
+	    <origin xyz="0 0 0.3099" rpy="0 0 0" />
+	    <parent link="base_link"/>
+	    <child link="turret_link"/>
+     </joint>
+
+     <link name="turret_link">
+	    <visual>
+		<origin xyz="0 0 0.03975" rpy="0 0 0"/>
+		<geometry>
+		    <cylinder length="0.0795" radius="0.2208"/>
+		</geometry>
+		<material name="Grey"/>
+	     </visual>
+    </link>
+
+    <joint name="table_joint" type="revolute">
+	    <axis xyz="0 0 1"/>
+	    <limit effort="24" lower="-3.14" upper="3.14" velocity="2.0"/>
+	    <origin xyz="0 0 0.1121" rpy="0 0 0" />
+	    <parent link="turret_link"/>
+	    <child link="table_link"/>
+    </joint>
+
+    <link name="table_link">
+	    <visual>
+		<origin xyz="0 0 0.00635" rpy="0 0 0"/>
+		<geometry>
+		    <cylinder length="0.0127" radius="0.425"/>
+		</geometry>
+		<material name="White"/>
+	     </visual>
+    </link>
+
+    <joint name="table_marker_joint" type="fixed">
+	    <origin xyz="-0.2125 0 0.0227" rpy="0 0 0" />        
+	    <parent link="table_link"/>
+	    <child link="table_marker_link" />
+    </joint>
+
+    <link name="table_marker_link">
+	    <visual>
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+		<geometry>
+		    <box size="0.2 0.02 0.02"/>
+		</geometry>
+		<material name="Green"/>
+	     </visual>
+    </link>
+
+    <joint name="turret_extension_joint" type="fixed">
+	    <origin xyz="0.2208 0 0.03975" rpy="0 0 0" />        
+	    <parent link="turret_link"/>
+	    <child link="turret_extension_link" />
+    </joint>
+
+    <link name="turret_extension_link">
+	    <visual>
+		<origin xyz="0.11 0 0" rpy="0 0 0"/>
+		<geometry>
+		    <box size="0.22 0.1492 0.038"/>
+		</geometry>
+		<material name="Grey"/>
+	     </visual>
+    </link> 
+
+    <!-- Manipulator Base -->
+    <joint name="manipulator_base_joint" type="fixed">
+	    <origin xyz="0.22 0 -0.03115" rpy="0 0 0" />        
+	    <parent link="turret_extension_link"/>
+	    <child link="manipulator_base_link" />
+    </joint>
+
+    <link name="manipulator_base_link">
+	    <visual>
+		<origin xyz="0.075 0 0" rpy="0 0 0"/>
+		<geometry>
+		    <box size="0.15 0.244 0.2317"/>
+		</geometry>
+		<material name="Green"/>
+	     </visual>
+    </link> 
+
+    <!-- LMS Sensor Plate -->
+    <joint name="laser_back_plate_joint" type="fixed">
+	    <origin xyz="0.0 0.0 -0.11585" rpy="0 0 0" />        
+	    <parent link="manipulator_base_link"/>
+	    <child link="laser_back_plate_link" />
+    </joint>
+
+    <link name="laser_back_plate_link">
+	    <visual>
+		<origin xyz="0.004 0 -0.0765" rpy="0 0 0"/>
+		<geometry>
+		    <box size="0.008 0.18 0.153"/>
+		</geometry>
+		<material name="LightGrey"/>
+	     </visual>
+    </link>
+
+    <joint name="laser_bottom_plate_joint" type="fixed">
+	    <origin xyz="0.0955 0 -0.149" rpy="0 0 0" />        
+	    <parent link="laser_back_plate_link"/>
+	    <child link="laser_bottom_plate_link" />
+    </joint>
+
+    <link name="laser_bottom_plate_link">
+	    <visual>
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+		<geometry>
+		    <box size="0.17492 0.18 0.008"/>
+		</geometry>
+		<material name="LightGrey"/>
+	     </visual>
+    </link>
+
+    <!--Base Caster Support Link -->
+    <joint name="base_caster_support_joint" type="continuous">
+	    <origin xyz="-0.1152 0 -0.105" rpy="0 0 0" /> 
+	    <axis xyz="0 0 1"/>
+	    <anchor xyz="0 0 0"/>
+            <limit effort="100" velocity="100" k_velocity="0" />
+            <joint_properties damping="0.0" friction="0.0" />
+	    <parent link="chassi_battery_box_link"/>
+	    <child link="base_caster_support_link" />
+    </joint>
+
+    <link name="base_caster_support_link">
+	    <visual>
+		<origin xyz="0 0 -0.03325" rpy="0 0 0"/>
+		<geometry>
+		    <cylinder length="0.0665" radius="0.0212"/>
+		</geometry>
+		<material name="LightGrey"/>
+	     </visual>
+    </link> 
+
+    <joint name="base_caster_wheel_joint" type="continuous">
+	    <origin xyz="-0.05 0 -0.13" rpy="0 0 0"/>
+	    <axis xyz="0 1 0"/>
+	    <anchor xyz="0 0 0"/>
+            <limit effort="100" velocity="100" k_velocity="0" />
+            <joint_properties damping="0.0" friction="0.0" />
+	    <parent link="base_caster_support_link"/>
+	    <child link="base_caster_wheel_link"/>
+    </joint>
+
+    <link name="base_caster_wheel_link">
+            <visual>
+              <origin xyz="0 0 0" rpy="-1.570796 0 0"/>
+              <geometry>
+                  <cylinder length="0.0206" radius="0.0635"/>
+              </geometry>
+              <material name="WheelBlack"/>
+            </visual>
+    </link>
+
+    <!--Left and Right Wheels-->
+    <joint name="base_link_left_wheel_joint" type="continuous">
+	    <origin xyz="0.15835 0.25 0.127" rpy="0 0 0"/>
+            <!--<origin xyz="0.15835 ${reflect*0.2475} 0.127" rpy="${-3.1415927/2} 0 0"/>-->
+            <axis xyz="0 1 0"/>
+            <!--<anchor xyz="0 0 0"/>-->
+            <limit effort="100" velocity="100" />
+            <joint_properties damping="0.0" friction="0.0" />
+            <parent link="base_link" />
+            <child link="base_link_left_wheel_link" />
+     </joint>
+
+     <link name="base_link_left_wheel_link">
+            <visual>
+              <origin xyz="0 0 0" rpy="-1.570796 0 0"/>
+              <geometry>
+                  <cylinder length="0.087" radius="0.127"/>
+              </geometry>
+              <material name="WheelBlack"/>
+            </visual>
+    </link>
+
+    <joint name="base_link_right_wheel_joint" type="continuous">
+	    <origin xyz="0.15835 -0.25 0.127" rpy="0 0 0"/>
+            <!--<origin xyz="0.15835 ${reflect*0.2475} 0.127" rpy="${-3.1415927/2} 0 0"/>-->
+            <axis xyz="0 1 0"/>
+            <!--<anchor xyz="0 0 0"/>-->
+            <limit effort="100" velocity="100" />
+            <joint_properties damping="0.0" friction="0.0" />
+            <parent link="base_link" />
+            <child link="base_link_right_wheel_link" />
+    </joint>
+
+    <link name="base_link_right_wheel_link">
+            <visual>
+              <origin xyz="0 0 0" rpy="-1.570796 0 0"/>
+              <geometry>
+                  <cylinder length="0.087" radius="0.127"/>
+              </geometry>
+              <material name="WheelBlack"/>
+            </visual>
+    </link>
+
+    <!-- <link name="wheel_right">
+        <visual>
+        <geometry>
+            <cylinder radius="0.1315" length=".070"/>
+        </geometry>
+        <material name = "black">
+            <color rgba="0.2 0.2 0.2 1"/>
+        </material>
+        </visual>
+    </link>
+
+    <joint name="joint1" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="wheel_right"/>
+        <origin rpy="0 1.57075 1.57075" xyz= "0 0.33 0.1315" />
+    </joint>
+
+    <link name="wheel_left">
+        <visual>
+            <geometry>
+                <cylinder radius="0.1315" length=".070"/>
+            </geometry>
+            <material name = "black"/>
+        </visual>
+    </link>
+
+
+    <joint name="joint2" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="wheel_left"/>
+        <origin rpy="0 1.57075 1.57075" xyz= "0 -.330 0.1315"/>
+    </joint>
+
+    <link name="wheel_small_right">
+        <visual>
+            <geometry>
+                <cylinder radius="0.080" length=".035"/>
+            </geometry>
+            <material name = "black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="joint3" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="wheel_small_right"/>
+        <origin rpy="0 1.57075 1.57075" xyz= "-0.378 0.33 0.080" />
+    </joint>
+      
+    <link name="wheel_small_left">
+        <visual>
+            <geometry>
+                <cylinder radius="0.080" length=".035"/>
+            </geometry>
+            <material name = "black"/>
+        </visual>
+    </link>
+
+    <joint name="joint4" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="wheel_small_left"/>
+        <origin rpy="0 1.57075 1.57075" xyz= "-0.378 -.330 0.080"/>
+    </joint>
+
+    <link name="bottom_base">
+        <visual>
+            <geometry>
+                <box size="1.0 .660 .070"/>
+            </geometry>
+            <material name = "grey">
+                <color rgba="0.5 0.5 0.5 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="joint5" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="bottom_base"/>
+        <origin rpy="0 0 0" xyz= "-0.088 0 0.105"/>
+    </joint>
+      
+    <link name="top_base">
+        <visual>
+            <geometry>
+        <box size="0.9000 .660 .070"/> 
+        </geometry>
+            <material name = "grey"/>
+        </visual>
+    </link>
+
+    <joint name="joint6" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="top_base"/>
+        <origin rpy="0 0 0" xyz= "-0.088 0 0.445"/>
+    </joint>
+      
+    <link name="base_laser_link">
+        <visual>
+            <geometry>
+                <box size="0.100 .100 .150"/> 
+            </geometry>
+            <material name = "blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="joint7" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_laser_link"/>
+        <origin rpy="0 0 0" xyz= "0.37 0 0.216"/>
+    </joint>
+
+    <link name="lms_link">
+        <visual>
+            <geometry>
+                <box size="0.100 .100 .150"/> 
+            </geometry>
+            <material name = "blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="joint8" type="fixed">
+        <parent link="base_laser_link"/>
+        <child link="lms_link"/>
+        <origin rpy="0 0 0" xyz= "0 0 0"/>
+    </joint>
+    
+    <link name="velo_mount_low">
+        <visual>
+            <geometry>
+                <cylinder radius="0.045" length="0.63"/>
+            </geometry>
+            <material name = "black"/>
+        </visual>
+    </link>
+    
+    <joint name="velo_mount_base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="velo_mount_low"/>
+        <origin rpy="0 0 0" xyz= "-0.010 0 0.805"/>
+    </joint>
+    
+    <link name="velo_mount_high">
+        <visual>
+            <geometry>
+                <cylinder radius="0.055" length="0.63"/>
+            </geometry>
+            <material name = "black"/>
+        </visual>
+    </link> -->
+    <!-- adjust origin here to move the velo 0.422 at 1.6328: measure from bottom plate -->
+    <!-- <joint name="velo_mount_joint" type="fixed">
+        <parent link="velo_mount_low"/>
+        <child link="velo_mount_high"/>
+        <origin rpy="0 0 0" xyz= "0.00 0 0.422"/>
+    </joint>
+    
+    <link name="velo_body">
+        <visual>
+            <geometry>
+                <cylinder radius="0.04265" length="0.1442"/> 
+            </geometry>
+            <material name = "grey"/>      
+                <color rgba="0.5 0.5 0.5 1"/>
+          
+        </visual>
+    </link>
+
+    <joint name="velo_joint" type="fixed">
+        <parent link="velo_mount_high"/>
+        <child link="velo_body"/>
+        <origin rpy="0 0 -1.5708" xyz= "0 0 0.3871"/>
+    </joint>
+    
+    <link name="velodyne">
+        <visual>
+            <geometry>
+                <cylinder radius="0.04265" length="0.1442"/> 
+            </geometry>
+            <material name = "grey">
+                <color rgba="0.5 0.5 0.5 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="velo_link_joint" type="fixed">
+        <parent link="velo_body"/>
+        <child link="velodyne"/>
+        <origin rpy="0 0 0" xyz= "0 0 0.0187"/>
+    </joint> -->
+    
+</robot>

@@ -1,0 +1,39 @@
+base_local_planner: dwa_local_planner_moving_obs/DWAPlannerMovingObsROS
+DWAPlannerMovingObsROS:
+  transform_tolerance: 2.0
+  world_model: costmap
+  sim_time: 5.0
+  sim_granularity: 0.025
+  vx_samples: 5
+  vtheta_samples: 1
+  max_vel_x: .4
+  min_vel_x: 0.02
+  max_trans_vel: .4
+  min_trans_vel: 0.02
+  max_rot_vel: 4
+  min_rot_vel: 0
+  xy_goal_tolerance: 0.5
+  yaw_goal_tolerance: 0.5
+  latch_xy_goal_tolerance: false
+  goal_distance_bias: 24
+  path_distance_bias: 5
+  occdist_scale: .01
+  forward_point_dist: 0
+  oscillation_reset_dist: 0.05
+  acc_lim_th: 7
+  acc_lim_x: 6
+  acc_lim_y: 0.0
+  simple_attractor: false
+  max_vel_y: 0
+  min_vel_y: 0
+  
+  vy_samples: 0
+  penalise_negetive_x: false
+  stop_time_buffer: 0.2
+  scaling_speed: 0.5
+  max_scaling_factor: 0
+  controller_frequency: 20
+  prune_plan: true
+
+
+  

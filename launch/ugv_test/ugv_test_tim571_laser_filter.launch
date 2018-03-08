@@ -1,0 +1,11 @@
+<!-- ugv_test_move.launch
+     created by  Alireza Hekmati
+     created at  AIS
+     Lase filter for Tim571 -->
+
+<launch>
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+    <rosparam command="load" file="$(find ugv_v2_test)/config/lms100_laser_config.yaml" />
+    <remap from="scan_filtered" to="base_scan" />
+  </node>
+</launch>

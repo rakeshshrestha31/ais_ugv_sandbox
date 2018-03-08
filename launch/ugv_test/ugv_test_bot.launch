@@ -1,0 +1,19 @@
+<!-- ugv_test_bot.launch
+     created by  Alireza Hekmati
+     created at  AIS
+     this is the bot's urdf + state publishers file for ugv_v2_test -->
+<launch>
+<!-- urdf -->
+        <param name="robot_description" textfile="$(find ugv_sandbox)/config/navigation/UGV_V2_urdf.xml"/> 
+        <!-- <param name="robot_description" textfile="$(find ugv_v2_test)/config/ugv_urdf.xml"/> -->
+<!-- publisher -->
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+            <rosparam param="source_list">["platform_controller/joint_states"]</rosparam>
+            <param name="use_gui" value="true" />
+        </node>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+	    <param name="publish_frequency" value="4.0"/> </node>
+
+</launch>
+
+

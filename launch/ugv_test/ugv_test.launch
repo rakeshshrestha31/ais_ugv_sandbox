@@ -1,0 +1,43 @@
+<!-- ugv_test.launch
+     created by  Alireza Hekmati
+     created at  AIS
+     this is the lauch file for UGV test project -->
+<launch>
+<!-- ugv_test Explorer -->
+    <include file="$(find ugv_sandbox)/launch/ugv_test/ugv_test_explorer.launch"/>
+
+<!-- ugv_test LIDAR -->
+    <include file="$(find ugv_sandbox)/launch/ugv_test/ugv_test_lidar.launch"/> 
+
+<!-- imu node -->
+  <node pkg="ais_ugv2_xsens" type="ais_ugv2_xsens" respawn="false" name="imu_node" />
+
+<!-- Odometry node -->
+  <!-- <node pkg="ais_ugv2_odom" type="ais_ugv2_odom" respawn="false" name="odom_node" /> -->
+
+
+<!-- ugv_test UWB 
+<node name="wifi_listener" pkg="wifi_listener" type="wifi_listener" /> 
+  <node name="uwb_publisher" pkg="uwb_publisher" type="uwb_publisher">
+    <param name="port" value="/dev/ttyACM0" /> 
+  </node>
+<node name="uwb_pos" pkg="uwb_pos" type="uwb_pos"/> -->
+
+<!-- microcontroller nodes -->
+        <!-- <node pkg="rosserial_python" type="serial_node.py" name="gripper" output="screen"> 
+	  <param name="port" value="/dev/ttyACM1" /> 
+	  <param name="baud" value="57600" /> 
+	</node> 
+
+	<node pkg="rosserial_python" type="serial_node.py" name="manipulator" output="screen"> 
+	  <param name="port" value="/dev/ttyACM2" /> 
+	  <param name="baud" value="57600" /> 
+	</node> 
+
+	<node pkg="rosserial_python" type="serial_node.py" name="base" output="screen"> 
+	  <param name="port" value="/dev/ttyACM3" /> 
+	  <param name="baud" value="57600" /> 
+	</node> -->
+
+</launch>
+

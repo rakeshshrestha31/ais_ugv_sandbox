@@ -1,0 +1,21 @@
+<!-- ugv_test_explorer.launch
+     created by  Alireza Hekmati
+     created at  AIS
+     this is the lauch file for ugv_test_explorer -->
+<launch>
+<!-- urdf + state publisher -->
+    <include file="$(find ugv_sandbox)/launch/ugv_test/ugv_test_bot.launch"/>
+
+<!-- laser filter -->    
+    <include file="$(find ugv_sandbox)/launch/ugv_test/ugv_test_tim571_laser_filter.launch"/>
+
+<!-- SLAM -->
+    <include file="$(find ugv_sandbox)/launch/ugv_test/ugv_test_slam.launch"/> 
+    <!-- <include file="$(find ugv_sandbox)/launch/hector_ugv.launch"/> -->
+
+<!-- move_base - ugv_test Planner goes in here -->
+    <include file="$(find ugv_sandbox)/launch/ugv_test/ugv_test_move.launch"/>
+
+</launch>
+
+

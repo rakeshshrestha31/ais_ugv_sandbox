@@ -1,0 +1,252 @@
+<!-- powerbot_urdf.xml
+     created by  Hank Cheng
+     Mod'd by    Steven Lee
+     created at  RAMP Lab at SFU
+     last mod'd  May 2, 2014
+     
+     this is the urdf file for ramp_slym_thesis -->
+
+<robot name="powerbot">
+    <link name="base_footprint">
+        <visual>
+            <origin xyz="-0.138 0 .275" rpy="0 0 0" />
+            <geometry>
+                <box size="0.800 0.660 0.270"/>
+            </geometry>
+            <material name = "yellow">
+                <color rgba="1 1 0 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="-0.138 0 .275" rpy="0 0 0" />
+            <geometry>
+                <box size="0.800 0.660 0.270"/>
+            </geometry>
+            <material name = "yellow">
+                <color rgba="1 1 0 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="joint10" type="fixed">
+        <parent link="base_link"/>
+        <child link="base_footprint"/>
+        <origin rpy="0 0 0" xyz= "0 0 0"/>
+    </joint>
+
+    <link name="hokuyo_link" >
+	    <visual>
+		    <geometry>
+			    <box size="0.05 0.05 0.07"/> 
+		</geometry>
+		<material name = "black">
+			<color rgba="0 0 0 1"/>
+		</material>
+	    </visual>
+    </link>
+
+    <joint name="joint9" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="hokuyo_link"/>
+        <origin rpy="0 0 3.1415926" xyz= "-0.46 0 0.16"/>
+    </joint>
+
+    <link name="wheel_right">
+        <visual>
+        <geometry>
+            <cylinder radius="0.1315" length=".070"/>
+        </geometry>
+        <material name = "black">
+            <color rgba="0.2 0.2 0.2 1"/>
+        </material>
+        </visual>
+    </link>
+
+    <joint name="joint1" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="wheel_right"/>
+        <origin rpy="0 1.57075 1.57075" xyz= "0 0.33 0.1315" />
+    </joint>
+
+    <link name="wheel_left">
+        <visual>
+            <geometry>
+                <cylinder radius="0.1315" length=".070"/>
+            </geometry>
+            <material name = "black"/>
+        </visual>
+    </link>
+
+
+    <joint name="joint2" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="wheel_left"/>
+        <origin rpy="0 1.57075 1.57075" xyz= "0 -.330 0.1315"/>
+    </joint>
+
+    <link name="wheel_small_right">
+        <visual>
+            <geometry>
+                <cylinder radius="0.080" length=".035"/>
+            </geometry>
+            <material name = "black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="joint3" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="wheel_small_right"/>
+        <origin rpy="0 1.57075 1.57075" xyz= "-0.378 0.33 0.080" />
+    </joint>
+      
+    <link name="wheel_small_left">
+        <visual>
+            <geometry>
+                <cylinder radius="0.080" length=".035"/>
+            </geometry>
+            <material name = "black"/>
+        </visual>
+    </link>
+
+    <joint name="joint4" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="wheel_small_left"/>
+        <origin rpy="0 1.57075 1.57075" xyz= "-0.378 -.330 0.080"/>
+    </joint>
+
+    <link name="bottom_base">
+        <visual>
+            <geometry>
+                <box size="1.0 .660 .070"/>
+            </geometry>
+            <material name = "grey">
+                <color rgba="0.5 0.5 0.5 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="joint5" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="bottom_base"/>
+        <origin rpy="0 0 0" xyz= "-0.088 0 0.105"/>
+    </joint>
+      
+    <link name="top_base">
+        <visual>
+            <geometry>
+        <box size="0.9000 .660 .070"/> 
+        </geometry>
+            <material name = "grey"/>
+        </visual>
+    </link>
+
+    <joint name="joint6" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="top_base"/>
+        <origin rpy="0 0 0" xyz= "-0.088 0 0.445"/>
+    </joint>
+      
+    <link name="base_laser_link">
+        <visual>
+            <geometry>
+                <box size="0.100 .100 .150"/> 
+            </geometry>
+            <material name = "blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="joint7" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_laser_link"/>
+        <origin rpy="0 0 0" xyz= "0.37 0 0.216"/>
+    </joint>
+
+    <link name="lms_link">
+        <visual>
+            <geometry>
+                <box size="0.100 .100 .150"/> 
+            </geometry>
+            <material name = "blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="joint8" type="fixed">
+        <parent link="base_laser_link"/>
+        <child link="lms_link"/>
+        <origin rpy="0 0 0" xyz= "0 0 0"/>
+    </joint>
+    
+    <link name="velo_mount_low">
+        <visual>
+            <geometry>
+                <cylinder radius="0.045" length="0.63"/>
+            </geometry>
+            <material name = "black"/>
+        </visual>
+    </link>
+    
+    <joint name="velo_mount_base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="velo_mount_low"/>
+        <origin rpy="0 0 0" xyz= "-0.010 0 0.805"/>
+    </joint>
+    
+    <link name="velo_mount_high">
+        <visual>
+            <geometry>
+                <cylinder radius="0.055" length="0.63"/>
+            </geometry>
+            <material name = "black"/>
+        </visual>
+    </link>
+    <!-- adjust origin here to move the velo 0.422 at 1.6328: measure from bottom plate -->
+    <joint name="velo_mount_joint" type="fixed">
+        <parent link="velo_mount_low"/>
+        <child link="velo_mount_high"/>
+        <origin rpy="0 0 0" xyz= "0.00 0 0.422"/>
+    </joint>
+    
+    <link name="velo_body">
+        <visual>
+            <geometry>
+                <cylinder radius="0.04265" length="0.1442"/> 
+            </geometry>
+            <material name = "grey"/>      
+                <color rgba="0.5 0.5 0.5 1"/>
+          
+        </visual>
+    </link>
+
+    <joint name="velo_joint" type="fixed">
+        <parent link="velo_mount_high"/>
+        <child link="velo_body"/>
+        <origin rpy="0 0 -1.5708" xyz= "0 0 0.3871"/>
+    </joint>
+    
+    <link name="velodyne">
+        <visual>
+            <geometry>
+                <cylinder radius="0.04265" length="0.1442"/> 
+            </geometry>
+            <material name = "grey">
+                <color rgba="0.5 0.5 0.5 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="velo_link_joint" type="fixed">
+        <parent link="velo_body"/>
+        <child link="velodyne"/>
+        <origin rpy="0 0 0" xyz= "0 0 0.0187"/>
+    </joint>
+    
+</robot>

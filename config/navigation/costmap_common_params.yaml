@@ -1,0 +1,44 @@
+map_type: costmap
+
+#footprint: [[-0.450,-0.325], [-0.485,-0.160], [-0.485,0.160], [-0.450,0.325], [0.300,0.325], [0.345,0.160], [0.345,-0.160], [0.300,-0.325]]
+#footprint: [[-0.450,-0.325], [-0.485,-0.160], [-0.485,0.160], [-0.450,0.325], [0.130,0.325], [0.130,0.160], [0.130,-0.160], [0.130,-0.325]]
+footprint: [[-0.5,-0.25], [-0.5,0.25], [0.1,0.25], [0.1,-0.25]]
+
+transform_tolerance: 3.0
+update_frequency: 4.0
+publish_frequency: 2.0
+
+conservative_reset_dist: 1.0
+
+static_layer:
+  lethal_cost_threshold: 100
+
+inflation_layer:
+  cost_scaling_factor: 50.0
+  inflation_radius: 0.1
+
+# obstacle_layer:
+#   obstacle_range: 24.0      
+#   max_obstacle_height: 2.0    
+#   raytrace_range: 24.0   
+#   observation_sources: base_scan
+
+#   base_scan: {sensor_frame: base_laser_link, data_type: LaserScan, expected_update_rate: 0.4,
+#     observation_persistance: 0.0, marking: true, clearing: true}
+
+#   # for the plugins
+#   update_frequency: 4.0
+#   publish_frequency: 2.0
+
+obstacle_layer:
+  obstacle_range: 24.0      
+  max_obstacle_height: 2.0    
+  raytrace_range: 24.0   
+  observation_sources: scan
+
+  scan: {sensor_frame: camera_depth_optical_frame, data_type: LaserScan, expected_update_rate: 0.4,
+    observation_persistance: 0.0, marking: true, clearing: true, inf_is_valid: true}
+
+  # for the plugins
+  update_frequency: 4.0
+  publish_frequency: 2.0
